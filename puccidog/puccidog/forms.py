@@ -1,7 +1,7 @@
 from flask_wtf import Form
 from wtforms import TextField, PasswordField
 from wtforms.validators import Required
-from puccidog.models import User, users
+from puccidog.models import User
 
 class LoginForm(Form):
     """The default login form"""
@@ -18,7 +18,9 @@ class LoginForm(Form):
         if not rv:
             return False
 
-        user = users[self.email.data].pop()
+        user = User.query.filter_by(
+            email=self.email.data).first()
+
         if user is None:
             self.email.errors.append('Unknown username')
             return False

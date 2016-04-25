@@ -1,19 +1,25 @@
 from flask.ext.login import UserMixin
-from puccidog import lm
+from puccidog import lm, db
 
-class User(UserMixin):
+class User(UserMixin, db.Model):
     """The basic user object"""
-    pass
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True)
+    email = db.Column(db.String(120), unique=True)
+    password = db.Column(db.String(120))
 
-    def __init__(self, email=None, password=None):
-        self.id = email
-        self.password = password
+    def __init__(self, username, email):
+        self.username = username
+        self.email = email
+
+    def __repr__(self):
+        return '<User %r>' % self.username
 
     @lm.user_loader
-    def user_loader(email):
-        print email
-        #user = next(u for u in users if u.id == [email])
-        user = users[email].pop()
+    def user_loader(user_id):
+        print 'Loading user with email: ' + user_id
+        user = User.query.filter_by(
+            id=user_id).first()
         if user is None:
             return
 
@@ -22,19 +28,17 @@ class User(UserMixin):
     @lm.request_loader
     def request_loader(request):
         email = request.form.get('email')
-        if email not in users:
+        if email is None or email.data is None:
             return
-
-        user = User()
-        user.id = email
+        print 'Loading user with email: ' + email.data
+        user = User.query.filter_by(
+            email=request.email.data).first()
 
         # DO NOT ever store passwords in plaintext and always compare password
         # hashes using constant-time comparison!
-        user.is_authenticated = request.form['pw'] == users[email]['pw']
+        user.is_authenticated = True
 
         return user
 
     def check_password(self, password):
         return self.password == password
-
-users = {"luke@bearl.me": {User("luke@bearl.me", "testpw")}, "gwen.paja@gmail.com": {User("gwen.paja@gmail.com", "test2")}}
