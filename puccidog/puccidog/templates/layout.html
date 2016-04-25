@@ -35,8 +35,8 @@
                     </li>
                     {% endfor %}
                     {% if current_user.is_authenticated %}
-                    <li{% if id == active_page %} class="active" {% endif %}>
-                        <a href="{{ url_for('protected') }}">Doggie Cam</a>
+                    <li{% if "doggiecam" == active_page %} class="active" {% endif %}>
+                        <a href="{{ url_for('doggiecam') }}">Doggie Cam</a>
                     </li>
                     {% endif %}
                 </ul>

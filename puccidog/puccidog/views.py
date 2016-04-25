@@ -8,6 +8,11 @@ import flask.ext.login as flask_login
 from puccidog import app, lm
 from puccidog.models import User
 from puccidog.forms import LoginForm
+import os, os.path
+
+projdir = os.path.dirname(os.path.realpath(__file__))
+
+poochpicsdir = os.path.join(projdir, 'static/poochpics')
 
 @app.route('/')
 @app.route('/home')
@@ -33,6 +38,29 @@ def contact():
 def protected():
     return 'Logged in as: ' + flask_login.current_user.email
 
+@app.route('/doggiecam')
+@flask_login.login_required
+def doggiecam():
+    """ Renders the doggie cam pages """
+    # first up we need to load all of the images from the last day
+    # the rpi script will only have the images from the last day, so 
+    # basically we just need all of the images in the poochpics dir
+    poochpicsfiles = os.listdir(poochpicsdir)
+    poochpics = []
+    poochpicsfiles.sort(key=lambda x: os.path.getmtime(os.path.join(poochpicsdir, x)))
+
+    for f in reversed(poochpicsfiles):
+        poochpics.append(os.path.basename(f))
+
+
+    return flask.render_template(
+        'doggiecam.html',
+        poochpics = poochpics,
+        title='Doggie Cam',
+        year=datetime.now().year
+    )
+
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -45,7 +73,7 @@ def login():
 
         #app.flash('Logged in successfully.')
 
-        return flask.redirect(flask.url_for('protected'))
+        return flask.redirect(flask.url_for('home'))
 
     return flask.render_template('login.html', title='Login', year=datetime.now().year, form=form)
 

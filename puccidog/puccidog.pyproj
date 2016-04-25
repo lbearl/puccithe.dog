@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="puccidog\static\images\pucci-hero.jpg" />
+    <Content Include="puccidog\templates\doggiecam.html" />
     <Content Include="puccidog\templates\login.html" />
     <Content Include="requirements.txt" />
     <Content Include="puccidog\static\content\bootstrap.css" />

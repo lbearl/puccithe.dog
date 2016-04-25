@@ -246,3 +246,4 @@ ModelManifest.xml
 puccidog/env/
 *.pyc
 puccidog/puccidog/test.db
+puccidog/puccidog/static/poochpics/

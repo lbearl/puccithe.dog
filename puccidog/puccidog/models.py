@@ -1,5 +1,6 @@
 from flask.ext.login import UserMixin
 from puccidog import lm, db
+import bcrypt
 
 class User(UserMixin, db.Model):
     """The basic user object"""
@@ -41,4 +42,4 @@ class User(UserMixin, db.Model):
         return user
 
     def check_password(self, password):
-        return self.password == password
+        return bcrypt.hashpw(password.encode('utf-8'), self.password.encode('utf-8')) == self.password
