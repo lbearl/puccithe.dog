@@ -45,10 +45,12 @@
     <Folder Include="puccidog\static\" />
     <Folder Include="puccidog\static\content\" />
     <Folder Include="puccidog\static\fonts\" />
+    <Folder Include="puccidog\static\images\" />
     <Folder Include="puccidog\static\scripts\" />
     <Folder Include="puccidog\templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="puccidog\static\images\pucci-hero.jpg" />
     <Content Include="puccidog\templates\login.html" />
     <Content Include="requirements.txt" />
     <Content Include="puccidog\static\content\bootstrap.css" />
@@ -73,7 +75,6 @@
     <Content Include="puccidog\static\scripts\respond.js" />
     <Content Include="puccidog\static\scripts\respond.min.js" />
     <Content Include="puccidog\static\scripts\_references.js" />
-    <Content Include="puccidog\templates\about.html" />
     <Content Include="puccidog\templates\contact.html" />
     <Content Include="puccidog\templates\index.html" />
     <Content Include="puccidog\templates\layout.html" />

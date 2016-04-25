@@ -25,24 +25,13 @@ def contact():
     return flask.render_template(
         'contact.html',
         title='Contact',
-        year=datetime.now().year,
-        message='Your contact page.'
-    )
-
-@app.route('/about')
-def about():
-    """Renders the about page."""
-    return flask.flask.render_template(
-        'about.html',
-        title='About',
-        year=datetime.now().year,
-        message='Your application description page.'
+        year=datetime.now().year
     )
 
 @app.route('/protected')
 @flask_login.login_required
 def protected():
-    return 'Logged in as: ' + flask_login.current_user.id
+    return 'Logged in as: ' + flask_login.current_user.email
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -56,14 +45,11 @@ def login():
 
         #app.flash('Logged in successfully.')
 
-        next = flask.request.args.get('next')
-        # next_is_valid should check if the user has valid
-        # permission to access the `next` url
-        #if not next_is_valid(next):
-        #    return abort(400)
-
-        flask.session['user_id'] = form.user.id
-
-        return flask.redirect(next or flask.url_for('home'))
+        return flask.redirect(flask.url_for('protected'))
 
     return flask.render_template('login.html', title='Login', year=datetime.now().year, form=form)
+
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    flask_login.logout_user()
+    return flask.redirect(flask.url_for('home'))
