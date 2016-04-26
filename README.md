@@ -1,5 +1,5 @@
 # puccithe.dog
-A flask application + bash shell script which operates as a very basic puppy cam. It runs on a raspberry pi 1 (2011 model)
+A flask application + bash shell script which operates as a very basic puppy cam. It runs on a raspberry pi 1 revision B.
 
 ## Introduction
 This application was created to let me play with running a web application on a Raspberry Pi that I purchased a few years ago that 
