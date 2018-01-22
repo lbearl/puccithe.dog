@@ -1,0 +1,16 @@
+﻿{% extends "layout.html" %}
+{% set active_page = 'doggiecam' -%}
+{% block content %}
+
+<h2>{{ title }}</h2>
+
+<div class="row">
+    {% for path in poochpics %}
+    <div class="col-md-12 image-spacer">
+        <img src="/static/poochpics/{{ path }}" alt="Picture of Pucci on the Beach" class="img-rounded img-responsive"/>
+    </div>
+
+    {% endfor %}
+</div>
+
+{% endblock %}
