@@ -86,8 +86,12 @@ def logout():
 @app.route('/14bd03a7947545ca8bf8c048a178721f/update')
 def respond_sms():
    response = MessagingResponse()
-   process = subprocess.Popen(["/opt/lbearl/bin/c_sms", "-o"], stdout=subprocess.PIPE)
-   stdout = process.communicate()[0]
-   response.message(stdout.decode('utf-8'))
+   
+   # This is old logic which used a suid executable. 
+   # process = subprocess.Popen(["/opt/lbearl/bin/c_sms", "-o"], stdout=subprocess.PIPE)
+   # stdout = process.communicate()[0]
+   # response.message(stdout.decode('utf-8'))
+   temp_data = open("/opt/lbearl/temp.txt", "r")
+   response.message(temp_data.read().decode('utf-8'))
    return unicode(response)
 
